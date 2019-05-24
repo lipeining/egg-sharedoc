@@ -8,8 +8,10 @@
     },
     "dependencies": {
         "egg": "^2.15.1",
+        "egg-redis": "^2.3.2",
         "egg-scripts": "^2.11.0",
         "egg-session": "^3.1.0",
+        "egg-session-redis": "^2.1.0",
         "egg-sharedb": "github:lipeining/egg-sharedb",
         "egg-view": "^2.1.2",
         "egg-view-ejs": "^2.0.0"
@@ -29,7 +31,7 @@
     "scripts": {
         "start": "egg-scripts start --daemon --title=egg-server-sharedoc --sticky",
         "stop": "egg-scripts stop --title=egg-server-sharedoc",
-        "dev": "egg-bin dev",
+        "dev": " egg-bin dev",
         "debug": "egg-bin debug",
         "test": "npm run lint -- --fix && npm run test-local",
         "test-local": "egg-bin test",

@@ -22,11 +22,25 @@ module.exports = appInfo => {
     const userConfig = {
         // myAppName: 'egg',
     };
-
+    config.redis = {
+        client: {
+            port: 6379, // Redis port
+            host: '127.0.0.1', // Redis host
+            password: '',
+            db: 0,
+        },
+    };
+    config.sessionRedis = {
+        // 如果redis有两个clients的话，需要指定name
+        // name: 'session',
+    };
     config.sharedb = {
         client: {
-            // maybe session
-            session: true,
+            database: {
+                // type: 'mingo-memory'
+                type: 'mongo',
+                url: 'mongodb://localhost:27017/sharedoc'
+            }
         }
     };
     config.security = {
@@ -40,12 +54,12 @@ module.exports = appInfo => {
         encrypt: true,
     };
     config.web = {
-        url: 'http://localhost:8080',
-        port: 8080,
+        url: 'http://localhost:8000',
+        port: 8000,
     };
     config.cluster = {
         listen: {
-            port: 8080
+            port: 8000
         }
     };
     config.static = {

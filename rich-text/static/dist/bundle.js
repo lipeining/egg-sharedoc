@@ -10,29 +10,33 @@ var connection = new sharedb.Connection(socket);
 
 // For testing reconnection
 window.disconnect = function() {
-  connection.close();
+    connection.close();
 };
 window.connect = function() {
-  var socket = new WebSocket('ws://' + window.location.host);
-  connection.bindToSocket(socket);
+    var socket = new WebSocket('ws://' + window.location.host);
+    connection.bindToSocket(socket);
 };
 
 // Create local Doc instance mapped to 'examples' collection document with id 'richtext'
 var doc = connection.get('examples', 'richtext');
-doc.subscribe(function(err) {
-  if (err) throw err;
-  var quill = new Quill('#editor', {theme: 'snow'});
-  quill.setContents(doc.data);
-  quill.on('text-change', function(delta, oldDelta, source) {
-    if (source !== 'user') return;
-    doc.submitOp(delta, {source: quill});
-  });
-  doc.on('op', function(op, source) {
-    if (source === quill) return;
-    quill.updateContents(op);
-  });
-});
 
+doc.subscribe(function(err) {
+    if (err) throw err;
+    if (!doc.type) {
+        doc.create([], 'rich-text');
+    }
+    var quill = new Quill('#editor', { theme: 'snow' });
+    quill.setContents(doc.data);
+    quill.on('text-change', function(delta, oldDelta, source) {
+        if (source !== 'user') return;
+        console.log(oldDelta);
+        doc.submitOp(delta, { source: quill });
+    });
+    doc.on('op', function(op, source) {
+        if (source === quill) return;
+        quill.updateContents(op);
+    });
+});
 },{"quill":20,"rich-text":21,"sharedb/lib/client":25}],2:[function(require,module,exports){
 'use strict'
 
